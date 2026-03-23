@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    border-color: theme("colors.border");
+  }
+  body {
+    background-color: theme("colors.background");
+    color: theme("colors.foreground");
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection {
+    background-color: rgba(245, 166, 35, 0.3);
+    color: theme("colors.foreground");
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-playfair), serif;
+    letter-spacing: -0.025em;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #FAF8F3; }
+::-webkit-scrollbar-thumb { background: #E5DDD0; border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: #7A6455; }
+
+/* Instagram gradient */
+.bg-instagram {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+/* Embla Carousel */
+.embla { overflow: hidden; }
+.embla__container { display: flex; }
+.embla__slide { flex: 0 0 100%; min-width: 0; }
+@media (min-width: 768px) { .embla__slide { flex: 0 0 50%; } }
+@media (min-width: 1024px) { .embla__slide { flex: 0 0 33.333333%; } }
