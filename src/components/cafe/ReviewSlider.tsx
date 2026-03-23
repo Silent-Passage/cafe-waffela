@@ -5,7 +5,17 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 
-const HIGHLIGHT_KEYWORDS = ["fluffy", "fluffig", "Bananensplit", "herzlich", "lecker", "super", "gemütlich", "sauber", "clean"];
+const HIGHLIGHT_KEYWORDS = [
+  "fluffy",
+  "fluffig",
+  "Bananensplit",
+  "herzlich",
+  "lecker",
+  "super",
+  "gemütlich",
+  "sauber",
+  "clean",
+];
 
 function highlightText(text: string) {
   const regex = new RegExp(`(${HIGHLIGHT_KEYWORDS.join("|")})`, "gi");
@@ -17,19 +27,75 @@ function highlightText(text: string) {
       </strong>
     ) : (
       part
-    )
+    ),
   );
 }
 
 const REVIEWS = [
-  { id: "1", author: "Maria S.", rating: 5, text: "Die Waffeln sind absolut fluffy und so lecker! Die Bananensplit Waffel ist ein Traum. Das Personal ist herzlich und zuvorkommend. Definitiv ein Muss in Lustenau!", date: "2024-12-15", avatar: "M" },
-  { id: "2", author: "Thomas K.", rating: 5, text: "Super gemütliches Café mit fantastischen Waffeln. Die Atmosphäre ist einladend und das Essen kommt frisch und warm. Die Chicken Curry Bagel ist eine tolle Überraschung! Herzlich empfohlen.", date: "2024-11-28", avatar: "T" },
-  { id: "3", author: "Anna B.", rating: 5, text: "Wunderschönes kleines Café! Die Waffeln sind einfach herrlich fluffy und mit so viel Liebe gemacht. Super sauber und einladend. Wir kommen sicher wieder!", date: "2024-11-10", avatar: "A" },
-  { id: "4", author: "Peter M.", rating: 5, text: "Ich habe selten so eine Bananensplit Waffel gegessen! Absolut lecker und die Portionen sind großzügig. Die Betreiber sind herzlich und man fühlt sich sofort wohl.", date: "2024-10-22", avatar: "P" },
-  { id: "5", author: "Sabine R.", rating: 4, text: "Ein gemütliches Plätzchen für einen schönen Nachmittag. Die Waffeln sind fluffig und die Auswahl ist toll. Super freundliches Personal. Toiletten sind sauber. Empfehlenswert!", date: "2024-10-05", avatar: "S" },
-  { id: "6", author: "Klaus W.", rating: 5, text: "Beste Waffeln in Vorarlberg! Einfach super lecker, immer frisch und die Bananensplit Waffel ist mein absoluter Favorit. Das Café ist herzlich und gemütlich – ein zweites Zuhause.", date: "2024-09-18", avatar: "K" },
-  { id: "7", author: "Lisa H.", rating: 5, text: "Super nettes Team und wunderbare Waffeln! So fluffy wie ich sie mir immer gewünscht habe. Ein Muss für alle Waffelliebhaber in der Region!", date: "2024-09-02", avatar: "L" },
-  { id: "8", author: "Johannes F.", rating: 4, text: "Tolles Café mit leckerem Essen. Die Atmosphäre ist super gemütlich und einladend. Ich komme immer wieder gerne hierher für meine Waffel-Auszeit.", date: "2024-08-14", avatar: "J" },
+  {
+    id: "1",
+    author: "Maria S.",
+    rating: 5,
+    text: "Die Waffeln sind absolut fluffy und so lecker! Die Bananensplit Waffel ist ein Traum. Das Personal ist herzlich und zuvorkommend. Definitiv ein Muss in Lustenau!",
+    date: "2024-12-15",
+    avatar: "M",
+  },
+  {
+    id: "2",
+    author: "Thomas K.",
+    rating: 5,
+    text: "Super gemütliches Café mit fantastischen Waffeln. Die Atmosphäre ist einladend und das Essen kommt frisch und warm. Die Chicken Curry Bagel ist eine tolle Überraschung! Herzlich empfohlen.",
+    date: "2024-11-28",
+    avatar: "T",
+  },
+  {
+    id: "3",
+    author: "Anna B.",
+    rating: 5,
+    text: "Wunderschönes kleines Café! Die Waffeln sind einfach herrlich fluffy und mit so viel Liebe gemacht. Super sauber und einladend. Wir kommen sicher wieder!",
+    date: "2024-11-10",
+    avatar: "A",
+  },
+  {
+    id: "4",
+    author: "Peter M.",
+    rating: 5,
+    text: "Ich habe selten so eine Bananensplit Waffel gegessen! Absolut lecker und die Portionen sind großzügig. Die Betreiber sind herzlich und man fühlt sich sofort wohl.",
+    date: "2024-10-22",
+    avatar: "P",
+  },
+  {
+    id: "5",
+    author: "Sabine R.",
+    rating: 4,
+    text: "Ein gemütliches Plätzchen für einen schönen Nachmittag. Die Waffeln sind fluffig und die Auswahl ist toll. Super freundliches Personal. Toiletten sind sauber. Empfehlenswert!",
+    date: "2024-10-05",
+    avatar: "S",
+  },
+  {
+    id: "6",
+    author: "Klaus W.",
+    rating: 5,
+    text: "Beste Waffeln in Vorarlberg! Einfach super lecker, immer frisch und die Bananensplit Waffel ist mein absoluter Favorit. Das Café ist herzlich und gemütlich – ein zweites Zuhause.",
+    date: "2024-09-18",
+    avatar: "K",
+  },
+  {
+    id: "7",
+    author: "Lisa H.",
+    rating: 5,
+    text: "Super nettes Team und wunderbare Waffeln! So fluffy wie ich sie mir immer gewünscht habe. Ein Muss für alle Waffelliebhaber in der Region!",
+    date: "2024-09-02",
+    avatar: "L",
+  },
+  {
+    id: "8",
+    author: "Johannes F.",
+    rating: 4,
+    text: "Tolles Café mit leckerem Essen. Die Atmosphäre ist super gemütlich und einladend. Ich komme immer wieder gerne hierher für meine Waffel-Auszeit.",
+    date: "2024-08-14",
+    avatar: "J",
+  },
 ];
 
 interface ReviewSliderProps {
@@ -39,7 +105,7 @@ interface ReviewSliderProps {
 export function ReviewSlider({ googleReviewUrl }: ReviewSliderProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: "start" },
-    [Autoplay({ delay: 5000, stopOnInteraction: true })]
+    [Autoplay({ delay: 5000, stopOnInteraction: true })],
   );
   const [prevEnabled, setPrevEnabled] = useState(false);
   const [nextEnabled, setNextEnabled] = useState(false);
@@ -70,7 +136,8 @@ export function ReviewSlider({ googleReviewUrl }: ReviewSliderProps) {
             Wall of <span className="text-primary italic">Fame</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Don&apos;t just take our word for it. Here&apos;s what our wonderful community has to say.
+            Don&apos;t just take our word for it. Here&apos;s what our wonderful
+            community has to say.
           </p>
         </div>
 
@@ -97,8 +164,12 @@ export function ReviewSlider({ googleReviewUrl }: ReviewSliderProps) {
                         {review.avatar}
                       </div>
                       <div>
-                        <h4 className="font-bold text-foreground font-display">{review.author}</h4>
-                        <p className="text-sm text-muted-foreground">{new Date(review.date).toLocaleDateString("de-AT")}</p>
+                        <h4 className="font-bold text-foreground font-display">
+                          {review.author}
+                        </h4>
+                        <p className="text-sm text-muted-foreground">
+                          {new Date(review.date).toLocaleDateString("de-AT")}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -108,16 +179,20 @@ export function ReviewSlider({ googleReviewUrl }: ReviewSliderProps) {
           </div>
 
           <button
+            type="button"
             onClick={scrollPrev}
             disabled={!prevEnabled}
+            aria-label="Previous review"
             className="absolute left-0 top-1/2 -translate-y-12 -translate-x-1/2 w-12 h-12 rounded-full bg-white shadow-xl border border-border items-center justify-center text-foreground hover:text-primary hover:scale-110 disabled:opacity-50 disabled:scale-100 transition-all hidden md:flex"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
 
           <button
+            type="button"
             onClick={scrollNext}
             disabled={!nextEnabled}
+            aria-label="Next review"
             className="absolute right-0 top-1/2 -translate-y-12 translate-x-1/2 w-12 h-12 rounded-full bg-white shadow-xl border border-border items-center justify-center text-foreground hover:text-primary hover:scale-110 disabled:opacity-50 disabled:scale-100 transition-all hidden md:flex"
           >
             <ChevronRight className="w-6 h-6" />
@@ -131,7 +206,8 @@ export function ReviewSlider({ googleReviewUrl }: ReviewSliderProps) {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-foreground text-background font-semibold hover:bg-primary hover:text-foreground hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
           >
-            Loved your waffle? Leave us a 5-star hug on Google <Star className="w-5 h-5 fill-current" />
+            Loved your waffle? Leave us a 5-star hug on Google{" "}
+            <Star className="w-5 h-5 fill-current" />
           </a>
         </div>
       </div>

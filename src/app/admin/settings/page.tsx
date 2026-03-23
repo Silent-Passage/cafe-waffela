@@ -16,6 +16,10 @@ interface Settings {
   lieferandoUrl: string;
   instagramHandle: string;
   googleReviewUrl: string;
+  facebookUrl?: string;
+  tiktokUrl?: string;
+  contactEmail?: string;
+  googleMapsEmbedUrl?: string;
 }
 
 const fields: { name: keyof Settings; label: string; placeholder?: string; type?: string; hint?: string }[] = [
@@ -23,9 +27,15 @@ const fields: { name: keyof Settings; label: string; placeholder?: string; type?
   { name: "instagramHandle", label: "Instagram Handle", placeholder: "@waffela_lustenau" },
   { name: "googleReviewUrl", label: "Google Review URL", type: "url", placeholder: "https://g.page/r/..." },
   { name: "address", label: "Physical Address", placeholder: "Maria-Theresien-Straße 12, 6890 Lustenau" },
-  { name: "googleMapsUrl", label: "Google Maps Embed URL", hint: "The src URL from a Google Maps embed iframe." },
+  { name: "googleMapsUrl", label: "Google Maps Link", hint: "Link to Google Maps location" },
+  { name: "googleMapsEmbedUrl", label: "Google Maps Embed URL", hint: "The src URL from a Google Maps embed iframe." },
   { name: "phone", label: "Phone Number", placeholder: "+43 660 000 0000" },
   { name: "whatsappNumber", label: "WhatsApp Number", placeholder: "+436600000000", hint: "International format without spaces." },
+  { name: "contactEmail", label: "Contact Email", type: "email", placeholder: "info@cafewaffela.at" },
+  { name: "facebookUrl", label: "Facebook URL", type: "url", placeholder: "https://facebook.com/..." },
+  { name: "tiktokUrl", label: "TikTok URL", type: "url", placeholder: "https://tiktok.com/@..." },
+  { name: "foodoraUrl", label: "Foodora URL", type: "url", placeholder: "https://foodora.at/..." },
+  { name: "lieferandoUrl", label: "Lieferando URL", type: "url", placeholder: "https://lieferando.at/..." },
 ];
 
 export default function SettingsPage() {

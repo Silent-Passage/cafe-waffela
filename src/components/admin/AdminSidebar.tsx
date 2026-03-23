@@ -21,7 +21,6 @@ const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/admin/menu", label: "Menu Items", icon: UtensilsCrossed },
   { href: "/admin/hours", label: "Opening Hours", icon: Clock },
-  { href: "/admin/delivery", label: "Delivery Links", icon: Truck },
   { href: "/admin/notifications", label: "Notifications", icon: Bell },
   { href: "/admin/settings", label: "Site Settings", icon: Settings },
 ];
@@ -41,6 +40,8 @@ export function AdminSidebar() {
           Waffela Admin
         </span>
         <button
+          type="button"
+          aria-label="Close sidebar menu"
           onClick={() => setOpen(false)}
           className="ml-auto text-sidebar-foreground/50 hover:text-sidebar-foreground lg:hidden"
         >
@@ -87,7 +88,9 @@ export function AdminSidebar() {
   return (
     <>
       {/* Desktop */}
-      <div className="hidden lg:flex lg:fixed lg:inset-y-0 lg:left-0 lg:z-50">{sidebar}</div>
+      <div className="hidden lg:flex lg:fixed lg:inset-y-0 lg:left-0 lg:z-50">
+        {sidebar}
+      </div>
 
       {/* Mobile overlay */}
       <AnimatePresence>
@@ -120,12 +123,16 @@ export function AdminSidebar() {
       {/* Mobile header */}
       <header className="h-16 bg-card border-b border-border flex items-center px-4 lg:hidden sticky top-0 z-30">
         <button
+          type="button"
+          aria-label="Toggle sidebar menu"
           onClick={() => setOpen(true)}
           className="p-2 -ml-2 text-foreground/70 hover:text-foreground rounded-lg hover:bg-secondary"
         >
           <MenuIcon className="w-6 h-6" />
         </button>
-        <span className="ml-2 font-display font-bold text-lg">Waffela Admin</span>
+        <span className="ml-2 font-display font-bold text-lg">
+          Waffela Admin
+        </span>
       </header>
     </>
   );
