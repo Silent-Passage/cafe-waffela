@@ -42,41 +42,57 @@ export function Hero({ tagline, googleMapsUrl }: HeroProps) {
             {tagline ?? "Hausgemachte Waffeln. Herz. Heimat."}
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.4,
+              duration: 0.8,
+              ease: "easeOut",
+              staggerChildren: 0.2,
+            }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() =>
                 document
                   .getElementById("menu")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-primary text-foreground font-bold text-lg shadow-[0_0_40px_-10px_rgba(245,166,35,0.8)] hover:scale-105 active:scale-95 transition-all duration-300"
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-primary text-foreground font-bold text-lg shadow-[0_0_40px_-10px_rgba(245,166,35,0.8)] transition-all duration-300"
             >
               Explore Menu
-            </button>
+            </motion.button>
 
-            <a
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               href={
                 googleMapsUrl ??
                 "http://googleusercontent.com/maps.google.com/4"
               }
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold text-lg hover:bg-white/20 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center"
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold text-lg hover:bg-white/20 transition-all duration-300 flex items-center justify-center"
             >
               Get Directions
-            </a>
+            </motion.a>
 
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() =>
                 document
                   .getElementById("order-online")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold text-lg hover:bg-white/20 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center"
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold text-lg hover:bg-white/20 transition-all duration-300 flex items-center justify-center"
             >
               Online Bestellen 🛵
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         </motion.div>
       </div>
 

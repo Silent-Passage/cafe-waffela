@@ -16,15 +16,15 @@ export function InstagramCTA({ settings }: { settings: any }) {
             <span className="text-[#D70F64] italic">{handle}</span> 🧇
           </h2>
           <p className="text-[#2D1B0D]/70 text-lg max-w-md">
-            Stay up to date with our latest creations, special offers, and sweet
-            moments.
+            Bleiben Sie auf dem Laufenden über unsere neuesten Kreationen,
+            Sonderangebote und süßen Momente
           </p>
           <a
             href={igUrl}
             target="_blank"
             className="inline-block px-10 py-4 rounded-full bg-[#2D1B0D] text-white font-bold text-lg hover:bg-black transition-colors"
           >
-            Wir auf Instagram folgen
+            Uns auf Instagram folgen
           </a>
         </div>
 
@@ -36,9 +36,9 @@ export function InstagramCTA({ settings }: { settings: any }) {
             Waffela in the Wild 📸
           </h3>
           <p className="text-[#2D1B0D]/70 mb-8">
-            Snap a pic of your perfect waffle, tag{" "}
-            <span className="font-bold">{handle}</span>, and you might find
-            yourself on our wall of fame!
+            Mach ein Foto von deiner perfekten Waffel, markiere{" "}
+            <span className="font-bold">{handle}</span> und vielleicht landest
+            du schon bald auf unserer wall of fame!
           </p>
           <div className="font-bold text-[#D70F64] tracking-widest uppercase text-sm">
             Share Your Photo

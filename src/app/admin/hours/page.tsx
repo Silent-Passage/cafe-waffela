@@ -13,7 +13,15 @@ interface OpeningHour {
   closed: boolean;
 }
 
-const DEFAULT_DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const DEFAULT_DAYS = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 
 export default function HoursPage() {
   const queryClient = useQueryClient();
@@ -28,13 +36,24 @@ export default function HoursPage() {
     if (initial && initial.length > 0) {
       setHours(initial);
     } else {
-      setHours(DEFAULT_DAYS.map((day) => ({ day, open: "09:00", close: "18:00", closed: day === "Tuesday" })));
+      setHours(
+        DEFAULT_DAYS.map((day) => ({
+          day,
+          open: "09:00",
+          close: "18:00",
+          closed: day === "Tuesday",
+        })),
+      );
     }
   }, [initial]);
 
   const save = useMutation({
     mutationFn: (data: OpeningHour[]) =>
-      fetch("/api/hours", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }),
+      fetch("/api/hours", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["hours"] }),
   });
 
@@ -46,7 +65,10 @@ export default function HoursPage() {
 
   return (
     <div>
-      <PageHeader title="Öffnungszeiten" description="Manage your store's open and close times." />
+      <PageHeader
+        title="Öffnungszeiten"
+        description="Manage your store's open and close times."
+      />
 
       {isLoading ? (
         <div className="flex justify-center p-12">
@@ -55,27 +77,58 @@ export default function HoursPage() {
       ) : (
         <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden max-w-3xl">
           {hours.map((item, i) => (
-            <div key={item.day} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border-b border-border hover:bg-secondary/20 transition-colors gap-4 last:border-0">
+            <div
+              key={item.day}
+              className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border-b border-border hover:bg-secondary/20 transition-colors gap-4 last:border-0"
+            >
               <div className="w-32 font-bold text-foreground">{item.day}</div>
               <div className="flex items-center gap-4 flex-1">
                 <div className="flex items-center gap-2">
-                  <input type="time" value={item.open} disabled={item.closed} onChange={(e) => update(i, "open", e.target.value)}
-                    className="px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-40" />
+                  <input
+                    aria-label={`Öffnungszeit ${item.day}`}
+                    type="time"
+                    value={item.open}
+                    disabled={item.closed}
+                    onChange={(e) => update(i, "open", e.target.value)}
+                    className="px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-40"
+                  />
                   <span className="text-muted-foreground">–</span>
-                  <input type="time" value={item.close} disabled={item.closed} onChange={(e) => update(i, "close", e.target.value)}
-                    className="px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-40" />
+                  <input
+                    aria-label={`Schließzeit ${item.day}`}
+                    type="time"
+                    value={item.close}
+                    disabled={item.closed}
+                    onChange={(e) => update(i, "close", e.target.value)}
+                    className="px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-40"
+                  />
                 </div>
                 <label className="flex items-center gap-2 ml-auto cursor-pointer">
-                  <input type="checkbox" checked={item.closed} onChange={(e) => update(i, "closed", e.target.checked)} className="w-4 h-4 rounded" />
-                  <span className={`text-sm font-medium ${item.closed ? "text-red-500" : "text-muted-foreground"}`}>Geschlossen</span>
+                  <input
+                    type="checkbox"
+                    checked={item.closed}
+                    onChange={(e) => update(i, "closed", e.target.checked)}
+                    className="w-4 h-4 rounded"
+                  />
+                  <span
+                    className={`text-sm font-medium ${item.closed ? "text-red-500" : "text-muted-foreground"}`}
+                  >
+                    Geschlossen
+                  </span>
                 </label>
               </div>
             </div>
           ))}
           <div className="p-6 bg-secondary/30 flex justify-end">
-            <button onClick={() => save.mutate(hours)} disabled={save.isPending}
-              className="px-8 py-3 text-sm font-bold text-primary-foreground bg-primary rounded-xl shadow-md hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:transform-none flex items-center gap-2">
-              {save.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+            <button
+              onClick={() => save.mutate(hours)}
+              disabled={save.isPending}
+              className="px-8 py-3 text-sm font-bold text-primary-foreground bg-primary rounded-xl shadow-md hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:transform-none flex items-center gap-2"
+            >
+              {save.isPending ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Save className="w-4 h-4" />
+              )}
               Speichern
             </button>
           </div>

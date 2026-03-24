@@ -7,12 +7,12 @@ import {
   LayoutDashboard,
   UtensilsCrossed,
   Clock,
-  Truck,
   Bell,
   Settings,
   ExternalLink,
   Menu as MenuIcon,
   X,
+  Star,
 } from "lucide-react";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -21,6 +21,7 @@ const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/admin/menu", label: "Menu Items", icon: UtensilsCrossed },
   { href: "/admin/hours", label: "Opening Hours", icon: Clock },
+  { href: "/admin/wall-of-fame", label: "Wall of Fame", icon: Star },
   { href: "/admin/notifications", label: "Notifications", icon: Bell },
   { href: "/admin/settings", label: "Site Settings", icon: Settings },
 ];
@@ -87,12 +88,9 @@ export function AdminSidebar() {
 
   return (
     <>
-      {/* Desktop */}
       <div className="hidden lg:flex lg:fixed lg:inset-y-0 lg:left-0 lg:z-50">
         {sidebar}
       </div>
-
-      {/* Mobile overlay */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -104,8 +102,6 @@ export function AdminSidebar() {
           />
         )}
       </AnimatePresence>
-
-      {/* Mobile sidebar */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -120,7 +116,6 @@ export function AdminSidebar() {
         )}
       </AnimatePresence>
 
-      {/* Mobile header */}
       <header className="h-16 bg-card border-b border-border flex items-center px-4 lg:hidden sticky top-0 z-30">
         <button
           type="button"

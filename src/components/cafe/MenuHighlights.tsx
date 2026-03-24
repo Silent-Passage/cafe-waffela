@@ -29,7 +29,7 @@ export function MenuHighlights({ items }: MenuHighlightsProps) {
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Entdecken Sie unsere beliebtesten Kreationen – frisch, hausgemacht
-            und unwiderstehlich.
+            und unwiderstehlich
           </p>
         </motion.div>
 

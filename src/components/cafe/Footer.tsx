@@ -16,9 +16,17 @@ const TikTokIcon = ({ size = 20 }: { size?: number }) => (
 );
 
 export function Footer({ settings }: { settings?: any }) {
-  const handle =
+  const instagramHandle =
     settings?.instagramHandle?.replace("@", "") || "waffela_lustenau";
-  const email = "waffelaa@outlook.com";
+  const tiktokUrl =
+    settings?.tiktokUrl || "https://www.tiktok.com/@cafe.waffela";
+  const tiktokHandle = tiktokUrl.split("@")[1] || "cafe.waffela";
+
+  const facebookUrl =
+    settings?.facebookUrl ||
+    "https://www.facebook.com/profile.php?id=61568617409002";
+
+  const email = settings?.contactEmail || "waffelaa@outlook.com";
 
   return (
     <footer className="bg-foreground text-background py-16 border-t border-white/10">
@@ -38,34 +46,31 @@ export function Footer({ settings }: { settings?: any }) {
           </div>
         </div>
 
-        {/* Social & Contact Links */}
         <div className="flex flex-col gap-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
-            {/* Instagram */}
             <a
-              href={`https://instagram.com/${handle}`}
+              href={`https://instagram.com/${instagramHandle}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 text-white/80 hover:text-primary transition-colors"
             >
               <Instagram size={20} className="text-primary" />
-              <span className="text-sm font-medium">@{handle}</span>
+              <span className="text-sm font-medium">@{instagramHandle}</span>
             </a>
 
-            {/* TikTok */}
             <a
-              href="https://www.tiktok.com/@cafe.waffela"
+              href={tiktokUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 text-white/80 hover:text-primary transition-colors"
             >
-              <TikTokIcon size={20} />
-              <span className="text-sm font-medium">cafe.waffela</span>
+              <div className="text-primary">
+                <TikTokIcon size={20} />
+              </div>
+              <span className="text-sm font-medium">{tiktokHandle}</span>
             </a>
-
-            {/* Facebook */}
             <a
-              href="https://www.facebook.com/profile.php?id=61568617409002"
+              href={facebookUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 text-white/80 hover:text-primary transition-colors"
@@ -73,8 +78,6 @@ export function Footer({ settings }: { settings?: any }) {
               <Facebook size={20} className="text-primary" />
               <span className="text-sm font-medium">Cafe Waffela</span>
             </a>
-
-            {/* Email */}
             <a
               href={`mailto:${email}`}
               className="flex items-center gap-3 text-white/80 hover:text-primary transition-colors"
@@ -85,7 +88,8 @@ export function Footer({ settings }: { settings?: any }) {
           </div>
 
           <p className="text-white/30 text-xs mt-4 border-t border-white/5 pt-4">
-            © {new Date().getFullYear()} Cafe Waffela. Alle Rechte vorbehalten.
+            © {new Date().getFullYear()} {settings?.siteName || "Cafe Waffela"}.
+            Alle Rechte vorbehalten.
           </p>
         </div>
       </div>

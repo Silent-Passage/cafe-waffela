@@ -230,6 +230,7 @@ export default function MenuPage() {
                     Title
                   </label>
                   <input
+                    aria-label="Title input"
                     required
                     type="text"
                     value={form.title}
