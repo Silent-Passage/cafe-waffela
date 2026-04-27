@@ -28,9 +28,8 @@ export const metadata: Metadata = {
     "Café",
   ],
   icons: {
-    icon: "https://bq4duwnybfphnwpe.public.blob.vercel-storage.com/382973711_215203098057102_832114998054713157_n.png",
-    apple:
-      "https://bq4duwnybfphnwpe.public.blob.vercel-storage.com/382973711_215203098057102_832114998054713157_n.png",
+    icon: process.env.NEXT_PUBLIC_APP_ICON_URL,
+    apple: process.env.NEXT_PUBLIC_APP_ICON_URL,
   },
   openGraph: {
     title: "Cafe Waffela – Hausgemachte Waffeln in Lustenau",

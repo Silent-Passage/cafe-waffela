@@ -49,12 +49,10 @@ const cards = [
 ];
 
 export default function DashboardPage() {
-  // Auth.js Session Hook
   const { data: session, status } = useSession();
 
   const [rating, setRating] = useState<string>("—");
 
-  // React Query: Daten werden nur geladen, wenn der User eingeloggt ist
   const { data: menuItems } = useQuery({
     queryKey: ["menu"],
     queryFn: () => fetch("/api/menu").then((r) => r.json()),
@@ -82,7 +80,6 @@ export default function DashboardPage() {
     }
   }, [status]);
 
-  // 1. Ladezustand: Verhindert "Content-Flashing" beim Refresh
   if (status === "loading") {
     return (
       <div className="flex h-[60vh] items-center justify-center">
@@ -91,12 +88,10 @@ export default function DashboardPage() {
     );
   }
 
-  // 2. Schutz: Wenn nicht eingeloggt, ab zum Login
   if (status === "unauthenticated") {
     redirect("/api/auth/signin");
   }
 
-  // 3. Render: Erst wenn die Session aktiv ist
   return (
     <div>
       <PageHeader

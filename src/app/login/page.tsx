@@ -10,7 +10,6 @@ export default function LoginPage() {
   const handleLogin = async () => {
     setIsLoading(true);
     try {
-      // callbackUrl: "/admin" sorgt dafür, dass du nach dem Login direkt im Dashboard landest
       await signIn("github", { callbackUrl: "/admin" });
     } catch (error) {
       console.error("Login failed", error);
@@ -48,7 +47,6 @@ export default function LoginPage() {
             Nur autorisierte Administratoren haben Zugriff auf das Dashboard.
           </p>
 
-          {/* Kleiner technischer Hinweis (optional) */}
           <div className="pt-4 border-t border-border/50">
             <p className="text-[9px] uppercase tracking-tighter text-muted-foreground/40 font-mono">
               Secure Environment • Admin Only

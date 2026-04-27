@@ -71,7 +71,6 @@ export default function WallOfFameAdminPage() {
     if (!file) return;
     setLoading(true);
     try {
-      // Wichtig: Wir nutzen deinen api/upload Endpunkt
       const response = await fetch(`/api/upload?filename=${file.name}`, {
         method: "POST",
         body: file,
@@ -217,7 +216,6 @@ export default function WallOfFameAdminPage() {
               )}
             </div>
 
-            {/* Platform Picker */}
             <div className="flex p-1.5 bg-muted/50 rounded-2xl border border-border/50">
               {["google", "instagram", "foodora"].map((t) => (
                 <button
@@ -239,7 +237,6 @@ export default function WallOfFameAdminPage() {
             </div>
 
             <div className="space-y-6">
-              {/* Highlights Section */}
               <div className="space-y-3">
                 <label className="text-[11px] font-black uppercase text-amber-600 px-1 flex items-center gap-2">
                   <Type size={12} /> Highlights zum Hervorheben
@@ -277,7 +274,6 @@ export default function WallOfFameAdminPage() {
                 </div>
               </div>
 
-              {/* Upload Bereich für Google & Instagram */}
               {(type === "instagram" || type === "google") && (
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-2">
@@ -339,7 +335,6 @@ export default function WallOfFameAdminPage() {
                 </div>
               )}
 
-              {/* Namensfeld (Handle für Insta, Klartext für Google) */}
               <div className="space-y-2">
                 <label className="text-[11px] font-black uppercase text-muted-foreground px-1">
                   {type === "instagram"
@@ -360,7 +355,6 @@ export default function WallOfFameAdminPage() {
                 />
               </div>
 
-              {/* Fokus-Vorschau */}
               {imageUrl && (
                 <div className="p-5 bg-primary/5 rounded-[2rem] border border-primary/10 space-y-4">
                   <div className="flex justify-between items-center text-[11px] font-black uppercase text-primary">
@@ -384,7 +378,6 @@ export default function WallOfFameAdminPage() {
                 </div>
               )}
 
-              {/* Foodora Spezialbereich */}
               {type === "foodora" && (
                 <div className="space-y-3">
                   <label className="text-[11px] font-black uppercase text-pink-600 px-1 italic">
@@ -438,7 +431,6 @@ export default function WallOfFameAdminPage() {
                 </div>
               )}
 
-              {/* Bewertung (Sterne) für Google/Foodora */}
               {type !== "instagram" && (
                 <div className="space-y-2">
                   <label className="text-[11px] font-black uppercase text-muted-foreground px-1">

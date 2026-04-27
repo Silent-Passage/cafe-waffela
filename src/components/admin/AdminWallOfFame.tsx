@@ -13,7 +13,6 @@ export function AdminWallOfFame() {
 
   return (
     <div className="space-y-8">
-      {/* Type Switcher */}
       <div className="flex gap-2 p-1 bg-muted rounded-2xl w-fit border border-border">
         {["google", "instagram", "foodora"].map((t) => (
           <button
@@ -34,7 +33,6 @@ export function AdminWallOfFame() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <form className="space-y-6 bg-card p-8 rounded-[2rem] border border-border shadow-sm">
-          {/* Name & Handle */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <label
