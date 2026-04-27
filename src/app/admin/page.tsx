@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   UtensilsCrossed,
@@ -9,6 +10,7 @@ import {
   Settings,
   ArrowRight,
   TrendingUp,
+  Star,
 } from "lucide-react";
 import { PageHeader } from "@/components/admin/PageHeader";
 
@@ -44,6 +46,7 @@ const cards = [
 ];
 
 export default function DashboardPage() {
+  const [rating, setRating] = useState<string>("—");
   const { data: menuItems } = useQuery({
     queryKey: ["menu"],
     queryFn: () => fetch("/api/menu").then((r) => r.json()),
@@ -52,6 +55,19 @@ export default function DashboardPage() {
     queryKey: ["notifications"],
     queryFn: () => fetch("/api/notifications").then((r) => r.json()),
   });
+
+  useEffect(() => {
+    fetch("/api/settings")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.googleRating) {
+          setRating(`${data.googleRating}★`);
+        } else {
+          setRating("n/a★");
+        }
+      })
+      .catch(() => setRating("n/a★"));
+  }, []);
 
   return (
     <div>
@@ -72,6 +88,7 @@ export default function DashboardPage() {
             <p className="text-sm text-muted-foreground">Menu Items</p>
           </div>
         </div>
+
         <div className="bg-card rounded-2xl border border-border p-6 flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
             <Bell className="w-6 h-6 text-purple-700" />
@@ -85,12 +102,13 @@ export default function DashboardPage() {
             </p>
           </div>
         </div>
+
         <div className="bg-card rounded-2xl border border-border p-6 flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center">
-            <span className="text-2xl">🧇</span>
+            <Star className="w-6 h-6 text-green-700 fill-green-700" />
           </div>
           <div>
-            <p className="text-2xl font-bold text-foreground">5★</p>
+            <p className="text-2xl font-bold text-foreground">{rating}</p>
             <p className="text-sm text-muted-foreground">Google Rating</p>
           </div>
         </div>

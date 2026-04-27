@@ -17,7 +17,7 @@ export function InstagramCTA({ settings }: { settings: any }) {
           </h2>
           <p className="text-[#2D1B0D]/70 text-lg max-w-md">
             Bleiben Sie auf dem Laufenden über unsere neuesten Kreationen,
-            Sonderangebote und süßen Momente
+            Sonderangebote und süßen Momente!
           </p>
           <a
             href={igUrl}

@@ -1,4 +1,4 @@
-import { Coffee, Instagram, Mail, Facebook } from "lucide-react";
+import { Instagram, Mail, Facebook } from "lucide-react";
 
 const TikTokIcon = ({ size = 20 }: { size?: number }) => (
   <svg
@@ -33,8 +33,12 @@ export function Footer({ settings }: { settings?: any }) {
       <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-12">
         {/* Logo & Branding */}
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center shadow-lg">
-            <Coffee className="text-primary-foreground" size={28} />
+          <div className="w-14 h-14 rounded-full bg-white overflow-hidden flex items-center justify-center shadow-lg border border-white/10">
+            <img
+              src="https://bq4duwnybfphnwpe.public.blob.vercel-storage.com/382973711_215203098057102_832114998054713157_n.jpg"
+              alt="Waffela Logo"
+              className="w-full h-full object-cover"
+            />
           </div>
           <div>
             <span className="font-display font-bold text-2xl block">
@@ -54,7 +58,9 @@ export function Footer({ settings }: { settings?: any }) {
               rel="noopener noreferrer"
               className="flex items-center gap-3 text-white/80 hover:text-primary transition-colors"
             >
-              <Instagram size={20} className="text-primary" />
+              <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
+                <Instagram size={18} className="text-primary" />
+              </div>
               <span className="text-sm font-medium">@{instagramHandle}</span>
             </a>
 
@@ -64,25 +70,31 @@ export function Footer({ settings }: { settings?: any }) {
               rel="noopener noreferrer"
               className="flex items-center gap-3 text-white/80 hover:text-primary transition-colors"
             >
-              <div className="text-primary">
-                <TikTokIcon size={20} />
+              <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
+                <TikTokIcon size={18} />
               </div>
               <span className="text-sm font-medium">{tiktokHandle}</span>
             </a>
+
             <a
               href={facebookUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 text-white/80 hover:text-primary transition-colors"
             >
-              <Facebook size={20} className="text-primary" />
+              <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
+                <Facebook size={18} className="text-primary" />
+              </div>
               <span className="text-sm font-medium">Cafe Waffela</span>
             </a>
+
             <a
               href={`mailto:${email}`}
               className="flex items-center gap-3 text-white/80 hover:text-primary transition-colors"
             >
-              <Mail size={20} className="text-primary" />
+              <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
+                <Mail size={18} className="text-primary" />
+              </div>
               <span className="text-sm font-medium">{email}</span>
             </a>
           </div>

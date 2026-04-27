@@ -10,7 +10,6 @@ interface HeroProps {
 export function Hero({ tagline, googleMapsUrl }: HeroProps) {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-      {/* Background Gradient */}
       <div
         className="absolute inset-0 z-0"
         style={{
@@ -27,6 +26,15 @@ export function Hero({ tagline, googleMapsUrl }: HeroProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
+          {/* Rundes Logo Badge */}
+          <div className="w-24 h-24 mx-auto mb-8 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl">
+            <img
+              src="https://bq4duwnybfphnwpe.public.blob.vercel-storage.com/382973711_215203098057102_832114998054713157_n.jpg"
+              alt="Waffela Logo"
+              className="w-full h-full object-cover"
+            />
+          </div>
+
           <span className="inline-block py-1 px-4 rounded-full bg-primary/20 backdrop-blur-md border border-primary/30 text-white font-medium tracking-wide text-sm mb-6 shadow-xl">
             Welcome to Lustenau's Sweetest Corner
           </span>
@@ -69,10 +77,7 @@ export function Hero({ tagline, googleMapsUrl }: HeroProps) {
             <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              href={
-                googleMapsUrl ??
-                "http://googleusercontent.com/maps.google.com/4"
-              }
+              href={googleMapsUrl ?? "https://maps.google.com"}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold text-lg hover:bg-white/20 transition-all duration-300 flex items-center justify-center"

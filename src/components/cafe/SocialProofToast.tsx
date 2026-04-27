@@ -14,11 +14,14 @@ export function SocialProofToast() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-
   useEffect(() => {
     fetch("/api/social-notifications")
       .then((r) => r.json())
-      .then((data) => setNotifications(data))
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setNotifications([...data].sort(() => Math.random() - 0.5));
+        }
+      })
       .catch(() => {});
   }, []);
 
@@ -27,17 +30,27 @@ export function SocialProofToast() {
 
     const show = () => {
       setIsVisible(true);
+
       setTimeout(() => {
         setIsVisible(false);
         setTimeout(() => {
-          setCurrentIndex((prev) => (prev + 1) % notifications.length);
+          setCurrentIndex((prev) => {
+            let next;
+            do {
+              next = Math.floor(Math.random() * notifications.length);
+            } while (next === prev && notifications.length > 1);
+            return next;
+          });
         }, 500);
       }, 5000);
     };
 
     const initial = setTimeout(show, 3000);
-    const cycle = setInterval(show, 12000);
-    return () => { clearTimeout(initial); clearInterval(cycle); };
+    const cycle = setInterval(show, 22000);
+    return () => {
+      clearTimeout(initial);
+      clearInterval(cycle);
+    };
   }, [notifications]);
 
   if (!notifications || notifications.length === 0) return null;
@@ -45,9 +58,10 @@ export function SocialProofToast() {
 
   return (
     <div className="fixed bottom-6 left-6 z-50 pointer-events-none">
-      <AnimatePresence>
-        {isVisible && (
+      <AnimatePresence mode="wait">
+        {isVisible && current && (
           <motion.div
+            key={current.id}
             initial={{ opacity: 0, y: 50, x: -20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
@@ -62,8 +76,12 @@ export function SocialProofToast() {
               )}
             </div>
             <div>
-              <p className="text-sm font-medium text-foreground leading-snug">{current.message}</p>
-              <p className="mt-1 text-xs text-muted-foreground">Just now • Lustenau</p>
+              <p className="text-sm font-medium text-foreground leading-snug">
+                {current.message}
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Just now • Lustenau
+              </p>
             </div>
           </motion.div>
         )}

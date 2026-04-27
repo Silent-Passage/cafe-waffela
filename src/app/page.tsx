@@ -4,11 +4,12 @@ import { OrderOnline } from "@/components/cafe/OrderOnline";
 import { SocialHub } from "@/components/cafe/SocialHub";
 import { InstagramCTA } from "@/components/cafe/InstagramCTA";
 import { Footer } from "@/components/cafe/Footer";
-import { ReviewSlider } from "@/components/cafe/ReviewSlider";
 import { db } from "@/lib/db";
 import { wallOfFameTable } from "@/lib/db/schema/walloffame";
+import { SocialProofToast } from "@/components/cafe/SocialProofToast";
 import { desc } from "drizzle-orm";
 import { getSiteSettings, getMenuItems, getOpeningHours } from "@/lib/db";
+import ReviewSlider from "@/components/cafe/ReviewSlider";
 
 export default async function HomePage() {
   const settingsData = await getSiteSettings().catch(() => null);
@@ -23,6 +24,8 @@ export default async function HomePage() {
 
   return (
     <main className="min-h-screen">
+      <SocialProofToast />
+
       <Hero
         tagline={settings?.heroTagline}
         googleMapsUrl={settings?.googleMapsUrl}
