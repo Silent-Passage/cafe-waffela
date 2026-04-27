@@ -26,10 +26,9 @@ export function Hero({ tagline, googleMapsUrl }: HeroProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          {/* Rundes Logo Badge */}
           <div className="w-24 h-24 mx-auto mb-8 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl">
             <img
-              src="https://bq4duwnybfphnwpe.public.blob.vercel-storage.com/382973711_215203098057102_832114998054713157_n.jpg"
+              src={process.env.NEXT_PUBLIC_APP_ICON_URL}
               alt="Waffela Logo"
               className="w-full h-full object-cover"
             />
@@ -101,7 +100,7 @@ export function Hero({ tagline, googleMapsUrl }: HeroProps) {
         </motion.div>
       </div>
 
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-10">
+      <div className="absolute -bottom-[1px] left-0 w-full overflow-hidden leading-none z-10 translate-y-[1px]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1200 120"

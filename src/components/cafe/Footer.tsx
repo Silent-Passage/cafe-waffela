@@ -35,7 +35,7 @@ export function Footer({ settings }: { settings?: any }) {
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-full bg-white overflow-hidden flex items-center justify-center shadow-lg border border-white/10">
             <img
-              src="https://bq4duwnybfphnwpe.public.blob.vercel-storage.com/382973711_215203098057102_832114998054713157_n.jpg"
+              src={process.env.NEXT_PUBLIC_APP_ICON_URL}
               alt="Waffela Logo"
               className="w-full h-full object-cover"
             />
