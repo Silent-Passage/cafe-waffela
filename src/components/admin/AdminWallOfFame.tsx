@@ -65,8 +65,6 @@ export function AdminWallOfFame() {
               </div>
             )}
           </div>
-
-          {/* Avatar URL (Google & Instagram) */}
           {type !== "foodora" && (
             <div className="space-y-2">
               <label
@@ -84,8 +82,6 @@ export function AdminWallOfFame() {
               />
             </div>
           )}
-
-          {/* Bild URL & Crop (Google & Instagram) */}
           {type !== "foodora" && (
             <div className="space-y-4">
               <div className="space-y-2">
@@ -133,8 +129,6 @@ export function AdminWallOfFame() {
               )}
             </div>
           )}
-
-          {/* Foodora Highlights */}
           {type === "foodora" && (
             <div className="space-y-2">
               <label
@@ -150,8 +144,6 @@ export function AdminWallOfFame() {
               />
             </div>
           )}
-
-          {/* Text & Rating */}
           <div className="space-y-2">
             <label
               htmlFor="reviewText"
@@ -195,7 +187,6 @@ export function AdminWallOfFame() {
           </button>
         </form>
 
-        {/* Live Preview Card */}
         <div className="sticky top-10 flex flex-col items-center">
           <p className="text-[10px] font-bold uppercase text-muted-foreground mb-4">
             Vorschau (Slider-Format)

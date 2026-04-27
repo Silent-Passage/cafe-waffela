@@ -3,12 +3,9 @@
 import { useState, useEffect, useRef } from "react";
 import {
   Star,
-  Instagram,
   Trash2,
   Plus,
   Loader2,
-  Globe,
-  Utensils,
   Camera,
   Edit2,
   X,
@@ -74,6 +71,7 @@ export default function WallOfFameAdminPage() {
     if (!file) return;
     setLoading(true);
     try {
+      // Wichtig: Wir nutzen deinen api/upload Endpunkt
       const response = await fetch(`/api/upload?filename=${file.name}`, {
         method: "POST",
         body: file,
@@ -81,6 +79,9 @@ export default function WallOfFameAdminPage() {
       const newBlob = await response.json();
       if (target === "image") setImageUrl(newBlob.url);
       else setAvatarUrl(newBlob.url);
+    } catch (error) {
+      console.error("Upload Error:", error);
+      alert("Upload fehlgeschlagen!");
     } finally {
       setLoading(false);
     }
@@ -117,12 +118,12 @@ export default function WallOfFameAdminPage() {
     setAvatarUrl("");
     setOrderedItems("");
     setFocusY(50);
+    setRating(5);
   };
 
   const addHighlight = (newWord: string) => {
     const trimmed = newWord.trim();
     if (!trimmed) return;
-
     const currentList = highlightedText
       ? highlightedText.split(",").map((s) => s.trim())
       : [];
@@ -216,6 +217,7 @@ export default function WallOfFameAdminPage() {
               )}
             </div>
 
+            {/* Platform Picker */}
             <div className="flex p-1.5 bg-muted/50 rounded-2xl border border-border/50">
               {["google", "instagram", "foodora"].map((t) => (
                 <button
@@ -225,7 +227,11 @@ export default function WallOfFameAdminPage() {
                     setType(t as any);
                     resetForm();
                   }}
-                  className={`flex-1 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-all ${type === t ? "bg-background shadow-lg text-primary scale-[1.02]" : "text-muted-foreground hover:text-foreground"}`}
+                  className={`flex-1 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-all ${
+                    type === t
+                      ? "bg-background shadow-lg text-primary scale-[1.02]"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
                 >
                   {t}
                 </button>
@@ -233,9 +239,10 @@ export default function WallOfFameAdminPage() {
             </div>
 
             <div className="space-y-6">
+              {/* Highlights Section */}
               <div className="space-y-3">
                 <label className="text-[11px] font-black uppercase text-amber-600 px-1 flex items-center gap-2">
-                  <Type size={12} /> Aktive Highlights
+                  <Type size={12} /> Highlights zum Hervorheben
                 </label>
                 <div className="flex flex-wrap gap-2 min-h-[44px] p-3 bg-amber-50/30 border border-amber-100 rounded-2xl">
                   {highlightedText
@@ -245,7 +252,7 @@ export default function WallOfFameAdminPage() {
                     .map((word, i) => (
                       <span
                         key={i}
-                        className="bg-amber-500 text-white px-3 py-1 rounded-full text-[10px] font-bold flex items-center gap-1 animate-in zoom-in"
+                        className="bg-amber-500 text-white px-3 py-1 rounded-full text-[10px] font-bold flex items-center gap-1"
                       >
                         {word}
                         <button
@@ -257,11 +264,7 @@ export default function WallOfFameAdminPage() {
                       </span>
                     ))}
                   <input
-                    placeholder={
-                      highlightedText
-                        ? ""
-                        : "Text markieren oder hier tippen..."
-                    }
+                    placeholder="Wort tippen & Enter..."
                     className="flex-1 bg-transparent outline-none text-sm min-w-[120px]"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
@@ -274,7 +277,8 @@ export default function WallOfFameAdminPage() {
                 </div>
               </div>
 
-              {type === "instagram" ? (
+              {/* Upload Bereich für Google & Instagram */}
+              {(type === "instagram" || type === "google") && (
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-[11px] font-black uppercase text-muted-foreground px-1">
@@ -282,7 +286,7 @@ export default function WallOfFameAdminPage() {
                     </label>
                     <div
                       onClick={() => avatarInputRef.current?.click()}
-                      className="aspect-square rounded-full border-2 border-dashed border-border flex items-center justify-center cursor-pointer overflow-hidden bg-muted/20 relative group"
+                      className="aspect-square rounded-full border-2 border-dashed border-border flex items-center justify-center cursor-pointer overflow-hidden bg-muted/20 relative group transition-all hover:border-primary/50"
                     >
                       {avatarUrl ? (
                         <img
@@ -292,21 +296,28 @@ export default function WallOfFameAdminPage() {
                       ) : (
                         <Upload className="text-muted-foreground" />
                       )}
+                      {loading && (
+                        <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                          <Loader2 className="animate-spin text-white" />
+                        </div>
+                      )}
                     </div>
                     <input
                       type="file"
                       ref={avatarInputRef}
                       hidden
+                      accept="image/*"
                       onChange={(e) => handleBlobUpload(e, "avatar")}
                     />
                   </div>
+
                   <div className="space-y-2">
                     <label className="text-[11px] font-black uppercase text-muted-foreground px-1">
                       Post Bild
                     </label>
                     <div
                       onClick={() => imageInputRef.current?.click()}
-                      className="aspect-square rounded-[2rem] border-2 border-dashed border-border flex items-center justify-center cursor-pointer overflow-hidden bg-muted/20 relative group"
+                      className="aspect-square rounded-[2rem] border-2 border-dashed border-border flex items-center justify-center cursor-pointer overflow-hidden bg-muted/20 relative group transition-all hover:border-primary/50"
                     >
                       {imageUrl ? (
                         <img
@@ -321,47 +332,39 @@ export default function WallOfFameAdminPage() {
                       type="file"
                       ref={imageInputRef}
                       hidden
+                      accept="image/*"
                       onChange={(e) => handleBlobUpload(e, "image")}
-                    />
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <label className="text-[11px] font-black uppercase text-muted-foreground px-1">
-                      Name / Avatar
-                    </label>
-                    <input
-                      placeholder="Name"
-                      className="w-full p-4 rounded-2xl bg-muted/30 border border-border outline-none"
-                      value={author}
-                      onChange={(e) => setAuthor(e.target.value)}
-                    />
-                    <input
-                      placeholder="Avatar URL"
-                      className="w-full p-3 rounded-xl bg-muted/10 border border-border text-xs outline-none"
-                      value={avatarUrl}
-                      onChange={(e) => setAvatarUrl(e.target.value)}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-[11px] font-black uppercase text-muted-foreground px-1">
-                      Bild URL
-                    </label>
-                    <input
-                      placeholder="https://..."
-                      className="w-full p-4 rounded-2xl bg-muted/30 border border-border outline-none"
-                      value={imageUrl}
-                      onChange={(e) => setImageUrl(e.target.value)}
                     />
                   </div>
                 </div>
               )}
 
+              {/* Namensfeld (Handle für Insta, Klartext für Google) */}
+              <div className="space-y-2">
+                <label className="text-[11px] font-black uppercase text-muted-foreground px-1">
+                  {type === "instagram"
+                    ? "Instagram Handle"
+                    : "Name des Gastes"}
+                </label>
+                <input
+                  placeholder={
+                    type === "instagram" ? "@waffela_gast" : "Max Mustermann"
+                  }
+                  className="w-full p-4 rounded-2xl bg-muted/30 border border-border outline-none font-bold"
+                  value={type === "instagram" ? handle : author}
+                  onChange={(e) =>
+                    type === "instagram"
+                      ? setHandle(e.target.value)
+                      : setAuthor(e.target.value)
+                  }
+                />
+              </div>
+
+              {/* Fokus-Vorschau */}
               {imageUrl && (
                 <div className="p-5 bg-primary/5 rounded-[2rem] border border-primary/10 space-y-4">
                   <div className="flex justify-between items-center text-[11px] font-black uppercase text-primary">
-                    <span>Fokus: {focusY}%</span>
+                    <span>Bild-Fokus: {focusY}%</span>
                   </div>
                   <input
                     type="range"
@@ -381,19 +384,11 @@ export default function WallOfFameAdminPage() {
                 </div>
               )}
 
-              {type === "instagram" && (
-                <input
-                  placeholder="@handle"
-                  className="w-full p-4 rounded-2xl bg-muted/30 border border-border font-bold text-primary outline-none"
-                  value={handle}
-                  onChange={(e) => setHandle(e.target.value)}
-                />
-              )}
-
+              {/* Foodora Spezialbereich */}
               {type === "foodora" && (
                 <div className="space-y-3">
                   <label className="text-[11px] font-black uppercase text-pink-600 px-1 italic">
-                    Menu Highlights
+                    Bestellte Artikel
                   </label>
                   <div className="flex flex-wrap gap-2 p-2 bg-pink-50/50 rounded-xl border border-pink-100 min-h-[40px]">
                     {orderedItems
@@ -434,7 +429,7 @@ export default function WallOfFameAdminPage() {
                               : m.title,
                           )
                         }
-                        className="text-left text-[10px] p-2.5 rounded-xl border border-border bg-background truncate"
+                        className="text-left text-[10px] p-2.5 rounded-xl border border-border bg-background truncate hover:bg-pink-50 transition-colors"
                       >
                         + {m.title}
                       </button>
@@ -443,13 +438,33 @@ export default function WallOfFameAdminPage() {
                 </div>
               )}
 
+              {/* Bewertung (Sterne) für Google/Foodora */}
+              {type !== "instagram" && (
+                <div className="space-y-2">
+                  <label className="text-[11px] font-black uppercase text-muted-foreground px-1">
+                    Bewertung
+                  </label>
+                  <div className="flex gap-2 bg-muted/20 p-3 rounded-2xl w-fit border border-border">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <Star
+                        key={s}
+                        size={24}
+                        onClick={() => setRating(s)}
+                        className={`cursor-pointer transition-all ${s <= rating ? "text-primary fill-primary scale-110" : "text-muted-foreground/30"}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Review Text */}
               <div className="space-y-2">
                 <label className="text-[11px] font-black uppercase text-muted-foreground px-1">
-                  Rezensionstext (Markieren zum Hervorheben)
+                  Rezension
                 </label>
                 <textarea
-                  placeholder="Was sagt der Gast?"
-                  className="w-full p-4 rounded-2xl bg-muted/30 border border-border outline-none min-h-[120px] text-sm leading-relaxed"
+                  placeholder="Was wurde geschrieben?"
+                  className="w-full p-4 rounded-2xl bg-muted/30 border border-border outline-none min-h-[120px] text-sm"
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                   onMouseUp={() => {
@@ -479,6 +494,7 @@ export default function WallOfFameAdminPage() {
           </form>
         </div>
 
+        {/* Live Feed Bereich */}
         <div className="lg:col-span-7 space-y-8">
           <div className="flex items-center justify-between border-b border-border pb-4">
             <h2 className="text-2xl font-black flex items-center gap-3">

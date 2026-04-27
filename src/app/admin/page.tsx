@@ -1,5 +1,7 @@
 "use client";
 
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -11,6 +13,7 @@ import {
   ArrowRight,
   TrendingUp,
   Star,
+  Loader2,
 } from "lucide-react";
 import { PageHeader } from "@/components/admin/PageHeader";
 
@@ -46,34 +49,59 @@ const cards = [
 ];
 
 export default function DashboardPage() {
+  // Auth.js Session Hook
+  const { data: session, status } = useSession();
+
   const [rating, setRating] = useState<string>("—");
+
+  // React Query: Daten werden nur geladen, wenn der User eingeloggt ist
   const { data: menuItems } = useQuery({
     queryKey: ["menu"],
     queryFn: () => fetch("/api/menu").then((r) => r.json()),
+    enabled: status === "authenticated",
   });
+
   const { data: notifications } = useQuery({
     queryKey: ["notifications"],
     queryFn: () => fetch("/api/notifications").then((r) => r.json()),
+    enabled: status === "authenticated",
   });
 
   useEffect(() => {
-    fetch("/api/settings")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.googleRating) {
-          setRating(`${data.googleRating}★`);
-        } else {
-          setRating("n/a★");
-        }
-      })
-      .catch(() => setRating("n/a★"));
-  }, []);
+    if (status === "authenticated") {
+      fetch("/api/settings")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.googleRating) {
+            setRating(`${data.googleRating}★`);
+          } else {
+            setRating("n/a★");
+          }
+        })
+        .catch(() => setRating("n/a★"));
+    }
+  }, [status]);
 
+  // 1. Ladezustand: Verhindert "Content-Flashing" beim Refresh
+  if (status === "loading") {
+    return (
+      <div className="flex h-[60vh] items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary/50" />
+      </div>
+    );
+  }
+
+  // 2. Schutz: Wenn nicht eingeloggt, ab zum Login
+  if (status === "unauthenticated") {
+    redirect("/api/auth/signin");
+  }
+
+  // 3. Render: Erst wenn die Session aktiv ist
   return (
     <div>
       <PageHeader
         title="Dashboard"
-        description="Welcome to the Cafe Waffela control center."
+        description={`Welcome back, ${session?.user?.name || "Admin"}.`}
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">

@@ -5,7 +5,6 @@ import * as schema from "./schema";
 const sql = neon(process.env.DATABASE_URL!);
 export const db = drizzle(sql, { schema });
 
-// Query functions
 export async function getSiteSettings() {
   const result = await db.select().from(schema.siteSettingsTable).limit(1);
   return result[0] || null;
