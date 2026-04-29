@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit, Playfair_Display } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -47,6 +48,7 @@ export default function RootLayout({
   return (
     <html lang="de" className={`${outfit.variable} ${playfair.variable}`}>
       <body className="font-sans">{children}</body>
+      <SpeedInsights />
     </html>
   );
 }

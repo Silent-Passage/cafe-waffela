@@ -11,6 +11,8 @@ import { desc } from "drizzle-orm";
 import { getSiteSettings, getMenuItems, getOpeningHours } from "@/lib/db";
 import ReviewSlider from "@/components/cafe/ReviewSlider";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const settingsData = await getSiteSettings().catch(() => null);
   const settings = settingsData || ({} as any);
